@@ -1,18 +1,24 @@
 import React from 'react';
 import RatingStars from './RatingStars';
+import DiscountBadge from './DiscountBadge';
+import ProductDescription from './ProductDescription';
 
-const ProductCard = ({ name, price, rating, reviews, inStock, category, image }) => {
+const ProductCard = ({ name, price, discountPrice, description, rating, reviews, inStock, category, image }) => {
   const handleAddToCart = () => {
     if (inStock) {
-      alert(`Added "${name}" to cart! Price: $${price}`);
+      const finalPrice = discountPrice || price;
+      alert(`Added "${name}" to cart! Price: $${finalPrice.toFixed(2)}`);
     }
   };
 
   return (
     <div className={`product-card ${!inStock ? 'unavailable' : ''}`}>
-      <span className={`badge ${inStock ? 'badge-green' : 'badge-red'}`}>
-        {inStock ? 'In Stock' : 'Out of Stock'}
-      </span>
+      <div className="badge-container">
+        <span className={`badge ${inStock ? 'badge-green' : 'badge-red'}`}>
+          {inStock ? 'In Stock' : 'Out of Stock'}
+        </span>
+        <DiscountBadge originalPrice={price} discountPrice={discountPrice} />
+      </div>
       
       <div className="product-image">
         <img src={image} alt={name} />
@@ -24,10 +30,21 @@ const ProductCard = ({ name, price, rating, reviews, inStock, category, image })
         <h3>{name}</h3>
         
         <RatingStars rating={rating} reviews={reviews} />
+        
+        <ProductDescription text={description} />
       </div>
 
       <div className="product-footer">
-        <span className="price">${price.toFixed(2)}</span>
+        <div className="price-container">
+          {discountPrice ? (
+            <>
+              <span className="price discounted-price">${discountPrice.toFixed(2)}</span>
+              <span className="original-price">${price.toFixed(2)}</span>
+            </>
+          ) : (
+            <span className="price">${price.toFixed(2)}</span>
+          )}
+        </div>
         <button 
           className="add-btn" 
           onClick={handleAddToCart} 
