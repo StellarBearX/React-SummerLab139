@@ -16,6 +16,7 @@ const ProductCard = ({ name, price, rating, reviews, inStock, category, image })
       
       <div className="product-image">
         <img src={image} alt={name} />
+        {!inStock && <div className="sold-out-overlay">Sold Out</div>}
       </div>
 
       <div className="product-info">

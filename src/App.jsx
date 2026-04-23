@@ -9,8 +9,9 @@ function App() {
   return (
     <div className="app-container">
       <header className="shop-header">
-        <h1>Tech Shop</h1>
-        <p>{products.length} products | {availableCount} available</p>
+        <span className="category" style={{ marginBottom: '16px' }}>Kunanan Wongsing</span>
+        <h1>Tech Shop </h1>
+        <p>Discover {products.length} elite products • <strong>{availableCount} currently in stock</strong></p>
       </header>
 
       <main className="gallery-grid">
