@@ -6,8 +6,8 @@ import './App.css';
 function App() {
   // 1. Central State
   const [tasks, setTasks] = useState([
-    { id: 1, text: 'Design Liquid Gradient', completed: true },
-    { id: 2, text: 'Implement Lifting State Up', completed: false },
+    { id: 1, text: 'Learn React Hooks', completed: true },
+    { id: 2, text: 'Build a Task App', completed: false },
   ]);
   const [filter, setFilter] = useState('All');
 
