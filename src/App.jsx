@@ -6,8 +6,9 @@ import './App.css';
 function App() {
   // 1. Central State
   const [tasks, setTasks] = useState([
-    { id: 1, text: 'Learn React Hooks', completed: true },
-    { id: 2, text: 'Build a Task App', completed: false },
+    { id: 1, text: 'Complete React Session 3', completed: true },
+    { id: 2, text: 'Read React docs', completed: false },
+    { id: 3, text: 'Read React documentation', completed: false },
   ]);
   const [filter, setFilter] = useState('All');
 
@@ -45,7 +46,7 @@ function App() {
   return (
     <main className="task-card">
       <h1>My Tasks</h1>
-      
+
       <TaskInput onAddTask={addTask} />
 
       <div className="filter-container">
