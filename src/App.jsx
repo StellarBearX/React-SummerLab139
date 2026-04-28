@@ -1,122 +1,86 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useState } from 'react';
+import useFetch from './hooks/useFetch';
+import CountryCard from './components/CountryCard.jsx';
+import SearchBar from './components/SearchBar.jsx';
+import './App.css';
+
+// The REST Countries API — returns only the fields we need
+const API =
+  'https://restcountries.com/v3.1/all?fields=name,capital,population,region,flags,languages';
+
+// All regions available as filter options
+const regions = ['All', 'Africa', 'Americas', 'Asia', 'Europe', 'Oceania'];
 
 function App() {
-  const [count, setCount] = useState(0)
+  // Fetch all country data via our custom hook
+  const { data: countries, loading, error } = useFetch(API);
+
+  // Controlled state for the search input
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // Currently selected region filter
+  const [selectedRegion, setSelectedRegion] = useState('All');
+
+  // Show a loading message while data is being fetched
+  if (loading) return <p>Loading countries...</p>;
+
+  // Show an error message if something went wrong
+  if (error) return <p>Error: {error}</p>;
+
+  // Filter countries by search term and selected region, then sort A–Z
+  const filteredCountries = (countries || [])
+    .filter((country) => {
+      const matchesSearch = country.name.common
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+
+      const matchesRegion =
+        selectedRegion === 'All' || country.region === selectedRegion;
+
+      return matchesSearch && matchesRegion;
+    })
+    .sort((a, b) => a.name.common.localeCompare(b.name.common));
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div className="app">
 
-      <div className="ticks"></div>
+      {/* ── Header ── */}
+      <header className="app-header">
+        <h1>Country Explorer</h1>
+        <span className="header-badge">🌍 {(countries || []).length} countries</span>
+        <p>Discover flags, capitals, and populations from every nation</p>
+      </header>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+      {/* ── Search bar ── */}
+      <SearchBar onSearch={setSearchTerm} searchTerm={searchTerm} />
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      {/* ── Region filter buttons ── */}
+      <div className="region-buttons">
+        {regions.map((region) => (
+          <button
+            key={region}
+            className={selectedRegion === region ? 'active' : ''}
+            onClick={() => setSelectedRegion(region)}
+          >
+            {region}
+          </button>
+        ))}
+      </div>
+
+      {/* ── Results count ── */}
+      <p className="results-count">
+        Showing {filteredCountries.length} of {(countries || []).length} countries
+      </p>
+
+      {/* ── Country grid ── */}
+      <div className="country-grid">
+        {filteredCountries.map((country) => (
+          <CountryCard key={country.name.common} country={country} />
+        ))}
+      </div>
+
+    </div>
+  );
 }
 
-export default App
+export default App;
