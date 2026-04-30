@@ -145,3 +145,4 @@ Temporary Items
 dist
 dist-ssr
 *.local
+.claude
