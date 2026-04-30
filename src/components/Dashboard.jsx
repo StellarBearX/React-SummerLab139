@@ -1,21 +1,21 @@
 import { useExpenses } from '../hooks/useExpenses'
+import styles from './Dashboard.module.css'
 
+// Map จาก key → CSS Module class สำหรับสีแต่ละ card
 const CARD_CONFIG = [
   {
     label: 'ยอดรายจ่ายทั้งหมด',
     key: 'totalExpenses',
     icon: '💸',
-    colorClass: 'text-rose-600',
-    bgClass: 'bg-rose-50',
-    borderClass: 'border-rose-100',
+    colorClass: styles.colorRose,
+    bgClass: styles.bgRose,
   },
   {
     label: 'งบประมาณที่ตั้ง',
     key: 'budget',
     icon: '🎯',
-    colorClass: 'text-indigo-600',
-    bgClass: 'bg-indigo-50',
-    borderClass: 'border-indigo-100',
+    colorClass: styles.colorIndigo,
+    bgClass: styles.bgIndigo,
   },
   {
     label: 'งบคงเหลือ',
@@ -27,9 +27,8 @@ const CARD_CONFIG = [
     label: 'จำนวนรายการ',
     key: 'count',
     icon: '📋',
-    colorClass: 'text-violet-600',
-    bgClass: 'bg-violet-50',
-    borderClass: 'border-violet-100',
+    colorClass: styles.colorViolet,
+    bgClass: styles.bgViolet,
   },
 ]
 
@@ -52,41 +51,35 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className={styles.grid}>
       {CARD_CONFIG.map((card) => {
         const value = dataMap[card.key]
         const isRemaining = card.dynamic
         const isNegative = isRemaining && remaining < 0
 
         const colorClass = isRemaining
-          ? isNegative ? 'text-red-600' : 'text-emerald-600'
+          ? isNegative ? styles.colorRed : styles.colorEmerald
           : card.colorClass
         const bgClass = isRemaining
-          ? isNegative ? 'bg-red-50' : 'bg-emerald-50'
+          ? isNegative ? styles.bgRed : styles.bgEmerald
           : card.bgClass
-        const borderClass = isRemaining
-          ? isNegative ? 'border-red-100' : 'border-emerald-100'
-          : card.borderClass
 
         return (
-          <div
-            key={card.key}
-            className={`rounded-2xl border ${borderClass} ${bgClass} p-5 flex flex-col gap-2 shadow-sm`}
-          >
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-500 font-medium">{card.label}</span>
-              <span className="text-xl">{card.icon}</span>
+          <div key={card.key} className={`${styles.card} ${bgClass}`}>
+            <div className={styles.cardHeader}>
+              <span className={styles.cardLabel}>{card.label}</span>
+              <span className={styles.cardIcon}>{card.icon}</span>
             </div>
-            <p className={`text-2xl font-bold tracking-tight ${colorClass}`}>
+            <p className={`${styles.cardValue} ${colorClass}`}>
               {card.key === 'count'
                 ? `${value} รายการ`
                 : formatCurrency(value)}
             </p>
             {isRemaining && isNegative && (
-              <p className="text-xs text-red-500 font-medium">⚠️ เกินงบประมาณ!</p>
+              <p className={styles.cardWarning}>⚠️ เกินงบประมาณ!</p>
             )}
             {isRemaining && budget === 0 && (
-              <p className="text-xs text-gray-400">ยังไม่ได้ตั้งงบประมาณ</p>
+              <p className={styles.cardHint}>ยังไม่ได้ตั้งงบประมาณ</p>
             )}
           </div>
         )

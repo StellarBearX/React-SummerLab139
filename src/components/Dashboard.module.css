@@ -1,0 +1,70 @@
+/* ─── Dashboard Grid ─────────────────────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ─── Summary Card ───────────────────────────────────────────────────────── */
+.card {
+  border-radius: 1rem;
+  border: 1px solid;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cardLabel {
+  font-size: 0.875rem;
+  color: #6b7280; /* gray-500 */
+  font-weight: 500;
+}
+
+.cardIcon {
+  font-size: 1.25rem;
+}
+
+.cardValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+.cardWarning {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #ef4444; /* red-500 */
+}
+
+.cardHint {
+  font-size: 0.75rem;
+  color: #9ca3af; /* gray-400 */
+}
+
+/* ─── Color Variants ─────────────────────────────────────────────────────── */
+.colorRose   { color: #e11d48; }
+.colorIndigo { color: #4f46e5; }
+.colorEmerald{ color: #059669; }
+.colorViolet { color: #7c3aed; }
+.colorRed    { color: #dc2626; }
+
+.bgRose    { background-color: #fff1f2; border-color: #fecdd3; }
+.bgIndigo  { background-color: #eef2ff; border-color: #c7d2fe; }
+.bgEmerald { background-color: #ecfdf5; border-color: #a7f3d0; }
+.bgViolet  { background-color: #f5f3ff; border-color: #ddd6fe; }
+.bgRed     { background-color: #fef2f2; border-color: #fecaca; }

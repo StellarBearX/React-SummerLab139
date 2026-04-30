@@ -5,26 +5,27 @@ import ExpenseForm from './components/ExpenseForm'
 import ExpenseList from './components/ExpenseList'
 import ExpenseChart from './components/ExpenseChart'
 import BudgetSetter from './components/BudgetSetter'
+import styles from './App.module.css'
+
+const APP_NAME = import.meta.env.VITE_APP_NAME ?? 'Personal Expense Tracker'
 
 export default function App() {
   const [editingExpense, setEditingExpense] = useState(null)
 
   return (
     <ExpenseProvider>
-      <div className="min-h-screen bg-slate-50">
+      <div className={styles.appWrapper}>
         {/* Header */}
-        <header className="bg-white border-b border-gray-100 shadow-sm sticky top-0 z-10">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <span className="text-2xl">💼</span>
+        <header className={styles.header}>
+          <div className={styles.headerInner}>
+            <div className={styles.headerBrand}>
+              <span className={styles.headerIcon}>💼</span>
               <div>
-                <h1 className="text-lg font-bold text-gray-900 leading-tight">
-                  Personal Expense Tracker
-                </h1>
-                <p className="text-xs text-gray-400">ติดตามรายจ่ายของคุณ</p>
+                <h1 className={styles.headerTitle}>{APP_NAME}</h1>
+                <p className={styles.headerSubtitle}>ติดตามรายจ่ายของคุณ</p>
               </div>
             </div>
-            <p className="text-sm text-gray-400 hidden sm:block">
+            <p className={styles.headerDate}>
               {new Date().toLocaleDateString('th-TH', {
                 year: 'numeric',
                 month: 'long',
@@ -35,16 +36,14 @@ export default function App() {
         </header>
 
         {/* Main Content */}
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6">
-
+        <main className={styles.main}>
           {/* Dashboard Summary Cards */}
           <Dashboard />
 
           {/* Content Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
+          <div className={styles.contentGrid}>
             {/* Left Column: Form + Budget */}
-            <div className="lg:col-span-1 flex flex-col gap-6">
+            <div className={styles.leftColumn}>
               <BudgetSetter />
               <ExpenseForm
                 editingExpense={editingExpense}
@@ -53,17 +52,16 @@ export default function App() {
             </div>
 
             {/* Right Column: Chart + List */}
-            <div className="lg:col-span-2 flex flex-col gap-6">
+            <div className={styles.rightColumn}>
               <ExpenseChart />
               <ExpenseList onEdit={setEditingExpense} />
             </div>
-
           </div>
         </main>
 
         {/* Footer */}
-        <footer className="text-center py-6 text-xs text-gray-400 border-t border-gray-100 mt-8">
-          Personal Expense Tracker • ข้อมูลถูกบันทึกในอุปกรณ์ของคุณ (localStorage)
+        <footer className={styles.footer}>
+          {APP_NAME} • ข้อมูลถูกบันทึกในอุปกรณ์ของคุณ (localStorage)
         </footer>
       </div>
     </ExpenseProvider>

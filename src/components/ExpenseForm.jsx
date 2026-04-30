@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useExpenses } from '../hooks/useExpenses'
 import { CATEGORIES } from '../context/ExpenseContext'
+import styles from './ExpenseForm.module.css'
 
 const EMPTY_FORM = {
   name: '',
@@ -65,35 +66,29 @@ export default function ExpenseForm({ editingExpense, onCancelEdit }) {
   const isEditing = Boolean(editingExpense)
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-      <h2 className="text-lg font-semibold text-gray-800 mb-5 flex items-center gap-2">
+    <div className={styles.card}>
+      <h2 className={styles.title}>
         {isEditing ? '✏️ แก้ไขรายการ' : '➕ เพิ่มรายจ่าย'}
       </h2>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit} className={styles.form}>
         {/* ชื่อรายการ */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            ชื่อรายการ
-          </label>
+        <div className={styles.field}>
+          <label className={styles.label}>ชื่อรายการ</label>
           <input
             type="text"
             name="name"
             value={form.name}
             onChange={handleChange}
             placeholder="เช่น ข้าวกล่อง, BTS, ยา..."
-            className={`w-full rounded-xl border px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 transition ${
-              errors.name ? 'border-red-400 bg-red-50' : 'border-gray-200 bg-gray-50'
-            }`}
+            className={`${styles.input} ${errors.name ? styles.inputError : ''}`}
           />
-          {errors.name && <p className="text-xs text-red-500 mt-1">{errors.name}</p>}
+          {errors.name && <p className={styles.errorMsg}>{errors.name}</p>}
         </div>
 
         {/* จำนวนเงิน */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            จำนวนเงิน (บาท)
-          </label>
+        <div className={styles.field}>
+          <label className={styles.label}>จำนวนเงิน (บาท)</label>
           <input
             type="number"
             name="amount"
@@ -102,23 +97,19 @@ export default function ExpenseForm({ editingExpense, onCancelEdit }) {
             placeholder="0.00"
             min="0"
             step="0.01"
-            className={`w-full rounded-xl border px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 transition ${
-              errors.amount ? 'border-red-400 bg-red-50' : 'border-gray-200 bg-gray-50'
-            }`}
+            className={`${styles.input} ${errors.amount ? styles.inputError : ''}`}
           />
-          {errors.amount && <p className="text-xs text-red-500 mt-1">{errors.amount}</p>}
+          {errors.amount && <p className={styles.errorMsg}>{errors.amount}</p>}
         </div>
 
         {/* หมวดหมู่ */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            หมวดหมู่
-          </label>
+        <div className={styles.field}>
+          <label className={styles.label}>หมวดหมู่</label>
           <select
             name="category"
             value={form.category}
             onChange={handleChange}
-            className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
+            className={styles.select}
           >
             {CATEGORIES.map((cat) => (
               <option key={cat} value={cat}>{cat}</option>
@@ -127,36 +118,25 @@ export default function ExpenseForm({ editingExpense, onCancelEdit }) {
         </div>
 
         {/* วันที่ */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            วันที่
-          </label>
+        <div className={styles.field}>
+          <label className={styles.label}>วันที่</label>
           <input
             type="date"
             name="date"
             value={form.date}
             onChange={handleChange}
-            className={`w-full rounded-xl border px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 transition ${
-              errors.date ? 'border-red-400 bg-red-50' : 'border-gray-200 bg-gray-50'
-            }`}
+            className={`${styles.input} ${errors.date ? styles.inputError : ''}`}
           />
-          {errors.date && <p className="text-xs text-red-500 mt-1">{errors.date}</p>}
+          {errors.date && <p className={styles.errorMsg}>{errors.date}</p>}
         </div>
 
         {/* Buttons */}
-        <div className="flex gap-3 pt-1">
-          <button
-            type="submit"
-            className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-xl transition text-sm shadow-sm"
-          >
+        <div className={styles.actions}>
+          <button type="submit" className={styles.submitBtn}>
             {isEditing ? 'บันทึกการแก้ไข' : 'เพิ่มรายการ'}
           </button>
           {isEditing && (
-            <button
-              type="button"
-              onClick={onCancelEdit}
-              className="px-5 bg-gray-100 hover:bg-gray-200 text-gray-600 font-semibold py-2.5 rounded-xl transition text-sm"
-            >
+            <button type="button" onClick={onCancelEdit} className={styles.cancelBtn}>
               ยกเลิก
             </button>
           )}

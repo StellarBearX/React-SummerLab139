@@ -1,0 +1,185 @@
+/* ─── Card Wrapper ───────────────────────────────────────────────────────── */
+.card {
+  background-color: #ffffff;
+  border-radius: 1rem;
+  border: 1px solid #f3f4f6;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  overflow: hidden;
+}
+
+/* ─── Empty State ────────────────────────────────────────────────────────── */
+.empty {
+  padding: 2.5rem;
+  text-align: center;
+}
+
+.emptyIcon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.emptyTitle {
+  color: #6b7280;
+  font-weight: 500;
+  margin: 0;
+}
+
+.emptyHint {
+  font-size: 0.875rem;
+  color: #9ca3af;
+  margin: 0.25rem 0 0;
+}
+
+/* ─── Header Row ─────────────────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.count {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: #9ca3af;
+}
+
+.exportBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  background-color: #ecfdf5; /* emerald-50 */
+  color: #047857; /* emerald-700 */
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.exportBtn:hover {
+  background-color: #d1fae5; /* emerald-100 */
+}
+
+/* ─── Table ──────────────────────────────────────────────────────────────── */
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  font-size: 0.875rem;
+  border-collapse: collapse;
+}
+
+.thead tr {
+  background-color: #f9fafb; /* gray-50 */
+  color: #6b7280;
+  text-align: left;
+}
+
+.thead th {
+  padding: 0.75rem 1rem;
+  font-weight: 500;
+}
+
+.thRight {
+  text-align: right;
+}
+
+.thCenter {
+  text-align: center;
+}
+
+/* ─── Table Row ──────────────────────────────────────────────────────────── */
+.tbody tr {
+  border-top: 1px solid #f9fafb;
+  transition: background-color 0.1s;
+}
+
+.tbody tr:hover {
+  background-color: rgba(249, 250, 251, 0.5);
+}
+
+.tbody td {
+  padding: 0.875rem 1rem;
+}
+
+.expenseName {
+  font-weight: 500;
+  color: #1f2937;
+}
+
+.categoryBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  background-color: #eef2ff; /* indigo-50 */
+  color: #4338ca; /* indigo-700 */
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+}
+
+.expenseDate {
+  color: #6b7280;
+}
+
+.expenseAmount {
+  text-align: right;
+  font-weight: 600;
+  color: #e11d48; /* rose-600 */
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.editBtn {
+  font-size: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.5rem;
+  background-color: #fffbeb; /* amber-50 */
+  color: #b45309; /* amber-700 */
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.editBtn:hover {
+  background-color: #fef3c7; /* amber-100 */
+}
+
+.deleteBtn {
+  font-size: 0.75rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.5rem;
+  background-color: #fef2f2; /* red-50 */
+  color: #dc2626; /* red-600 */
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.deleteBtn:hover {
+  background-color: #fee2e2; /* red-100 */
+}
